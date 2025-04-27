@@ -1,0 +1,12 @@
+/* src/styles/TextEditor.css */
+
+.text-editor {
+  margin: 20px;
+  text-align: center;
+}
+
+.text-editor input {
+  width: 80%;
+  padding: 10px;
+  font-size: 18px;
+}
