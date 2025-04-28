@@ -1,0 +1,16 @@
+.text-display-list {
+  padding: 20px;
+}
+
+.displays-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.single-display {
+  border: 2px dashed #ccc;
+  padding: 20px;
+  border-radius: 10px;
+}

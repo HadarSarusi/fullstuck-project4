@@ -1,0 +1,46 @@
+.find-replace-bar {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .find-replace-bar input {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 150px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  
+  .find-replace-bar input:focus {
+    border-color: #007bff;
+  }
+  
+  .find-replace-bar button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    transition: background-color 0.3s;
+  }
+  
+  .find-replace-bar button:hover {
+    background-color: #0056b3;
+  }
+  
+  .find-replace-bar p {
+    width: 100%;
+    text-align: center;
+    color: red;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  

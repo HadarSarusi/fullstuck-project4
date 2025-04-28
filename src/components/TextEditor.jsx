@@ -24,7 +24,7 @@ function TextEditor({ text, onTextChange }) {
         onChange={(e) => onTextChange(e.target.value)}
         placeholder="Type your text here..."
       />
-      <Keyboard onKeyClick={handleKeyClick} />
+    
     </div>
   );
 }

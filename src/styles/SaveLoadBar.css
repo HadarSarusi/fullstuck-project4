@@ -1,0 +1,57 @@
+.save-load-bar {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .input-with-save {
+    position: relative;
+  }
+  
+  .input-with-save input {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 200px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  
+  .input-with-save input:focus {
+    border-color: #28a745;
+  }
+  
+  .save-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 20px;
+    color: #28a745;
+    transition: color 0.3s;
+  }
+  
+  .save-icon:hover {
+    color: #1c7430;
+  }
+  
+  .save-load-bar button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    transition: background-color 0.3s;
+  }
+  
+  .save-load-bar button:hover {
+    background-color: #218838;
+  }
+  
