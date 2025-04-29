@@ -1,13 +1,11 @@
-.editable-file-display {
-  background-color: #f9f9f9;
-  padding: 20px;
-  margin: 20px 0;
+.editable-file {
   border: 2px dashed #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
   border-radius: 10px;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s;
 }
-
-.close-bar {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 10px;
+.editable-file.active {
+  background-color: #e0f7fa; /* צבע לקובץ פעיל */
 }

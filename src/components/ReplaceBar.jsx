@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Button from './Button';
 import '../styles/FindAndReplaceBar.css';
 
-function ReplaceBar({ text, setText, history, setHistory, setSearchTerm }) {
+function ReplaceBar({ text, setText, setSearchTerm }) {
   const [findText, setFindText] = useState('');
   const [replaceText, setReplaceText] = useState('');
   const [message, setMessage] = useState('');
@@ -12,16 +12,15 @@ function ReplaceBar({ text, setText, history, setHistory, setSearchTerm }) {
   const handleReplaceClick = () => {
     if (!findText) return;
     if (!text.toLowerCase().includes(findText.toLowerCase())) {
-      setMessage('לא נמצאה התאמה');
+      setMessage('לא נמצאה התאמה 😔');
       return;
     }
     setMessage('');
-    setHistory([...history, text]); // שומרים את המצב לפני השינוי
     const updatedText = text.split(findText).join(replaceText);
     setText(updatedText);
     setFindText('');
     setReplaceText('');
-    setSearchTerm(''); // ביטול הדגשה אחרי החלפה
+    setSearchTerm('');
   };
 
   return (

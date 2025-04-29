@@ -1,12 +1,17 @@
 // src/components/Keyboard.jsx
 
-import React from 'react';
+import React, { useState } from 'react';
 import Button from './Button';
 import SpaceButton from './SpaceButton';
+import DeleteWordButton from './DeleteWordButton';
 import DeleteButton from './DeleteButton';
+import ClearAllButton from './ClearAllButton';
+import UndoButton from './UndoButton';
 import '../styles/Keyboard.css';
 
-function Keyboard({ language, onKeyClick, onTextChange }) {
+function Keyboard({ onKeyClick, onTextChange }) {
+  const [language, setLanguage] = useState('english');
+
   const englishKeys = [
     'A', 'B', 'C', 'D', 'E', 'F', 'G',
     'H', 'I', 'J', 'K', 'L', 'M', 'N',
@@ -33,6 +38,13 @@ function Keyboard({ language, onKeyClick, onTextChange }) {
 
   return (
     <div className="keyboard">
+      {/* מתגים לשפה */}
+      <div className="keyboard-section">
+        <Button label="English" onClick={() => setLanguage('english')} />
+        <Button label="עברית" onClick={() => setLanguage('hebrew')} />
+        <Button label="Emojis" onClick={() => setLanguage('emoji')} />
+      </div>
+
       {/* מקשים רגילים */}
       <div className="keyboard-section">
         {getKeys().map((key, index) => (
@@ -40,10 +52,12 @@ function Keyboard({ language, onKeyClick, onTextChange }) {
         ))}
       </div>
 
-      {/* מקשים מיוחדים: Space ו-Delete כקומפוננטות נפרדות */}
-      <div className="keyboard-section">
+      {/* מקשים מיוחדים */}
+      <div className="keyboard-section actions">
         <SpaceButton onTextChange={onTextChange} />
         <DeleteButton onTextChange={onTextChange} />
+        <DeleteWordButton onTextChange={onTextChange} />
+        <ClearAllButton onTextChange={onTextChange} />
       </div>
     </div>
   );

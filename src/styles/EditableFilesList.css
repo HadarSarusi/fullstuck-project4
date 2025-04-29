@@ -1,16 +1,14 @@
-.text-display-list {
-  padding: 20px;
-}
-
-.displays-container {
-  margin-top: 20px;
+.editable-files-list {
   display: flex;
-  flex-direction: column;
-  gap: 30px;
 }
 
-.single-display {
-  border: 2px dashed #ccc;
+.sidebar-and-files {
+  display: flex;
+  width: 100%;
+}
+
+.main-area {
+  margin-left: 200px; /* מרחב ל־Sidebar */
+  flex: 1;
   padding: 20px;
-  border-radius: 10px;
 }

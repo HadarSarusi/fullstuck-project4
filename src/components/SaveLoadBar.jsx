@@ -4,38 +4,53 @@ import React, { useState } from 'react';
 import Button from './Button';
 import '../styles/SaveLoadBar.css';
 
-function SaveLoadBar({ text, color, fontSize, fontFamily }) {
-  const [fileName, setFileName] = useState('');
+function SaveLoadBar({
+  text, color, fontSize, fontFamily,
+  fileName, setFileName, onAfterSave,
+  username // 👈 קיבלנו את שם המשתמש
+}) {
+  const [inputName, setInputName] = useState('');
 
   const handleSave = () => {
-    if (!fileName) {
-      window.alert('Please enter a file name to save.');
+    const nameToSave = fileName || inputName;
+
+    if (!nameToSave || !username) {
+      window.alert('Please enter a file name and make sure you are logged in.');
       return;
     }
-    const fileData = {
+
+    const fullKey = `${username}_${nameToSave}`;
+
+    const data = {
       text,
       color,
       fontSize,
-      fontFamily
+      fontFamily,
+      fileName: nameToSave,
+      username
     };
-    localStorage.setItem(fileName, JSON.stringify(fileData));
-    window.alert(`Saved successfully as "${fileName}"! 🎉`);
-    window.location.reload(); // נטען מחדש כדי לעדכן סיידבר
+
+    localStorage.setItem(fullKey, JSON.stringify(data));
+
+    if (!fileName && setFileName) {
+      setFileName(nameToSave);
+    }
+
+    if (onAfterSave) onAfterSave(nameToSave);
+    window.alert(`Saved as "${nameToSave}" for user ${username}`);
   };
 
   return (
     <div className="save-load-bar">
-      <div className="input-with-save">
+      {!fileName && (
         <input
           type="text"
           placeholder="Enter file name..."
-          value={fileName}
-          onChange={(e) => setFileName(e.target.value)}
+          value={inputName}
+          onChange={(e) => setInputName(e.target.value)}
         />
-        <span className="save-icon" onClick={handleSave}>
-          💾
-        </span>
-      </div>
+      )}
+      <Button label="💾 Save" onClick={handleSave} />
     </div>
   );
 }

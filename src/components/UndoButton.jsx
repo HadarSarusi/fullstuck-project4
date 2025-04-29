@@ -3,20 +3,31 @@
 import React from 'react';
 import Button from './Button';
 
-function UndoButton({ text, setText, history, setHistory }) {
+function UndoButton({
+  text,
+  setText,
+  color,
+  setColor,
+  fontSize,
+  setFontSize,
+  fontFamily,
+  setFontFamily,
+  history,
+  setHistory
+}) {
   const handleUndo = () => {
     if (history.length === 0) return;
-    const lastState = history[history.length - 1];
-    setText(lastState);
-    setHistory(history.slice(0, -1));
+
+    const last = history[history.length - 1];
+
+    setText(last.text);
+    setColor(last.color);
+    setFontSize(last.fontSize);
+    setFontFamily(last.fontFamily);
+    setHistory((prev) => prev.slice(0, -1));
   };
 
-  return (
-    <div style={{ marginTop: '20px', textAlign: 'center' }}>
-      <Button label="Undo" onClick={handleUndo} />
-    </div>
-  );
+  return <Button label="Undo" onClick={handleUndo} />;
 }
 
 export default UndoButton;
-

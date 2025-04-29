@@ -1,15 +1,22 @@
 // src/components/EditableFilesList.jsx
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import EditableFile from './EditableFile';
 import Keyboard from './Keyboard';
 import Button from './Button';
-import '../styles/EditableFilesList.css'; // גם ה-CSS מותאם לשם
+import SaveSideBar from './SaveSideBar';
+import '../styles/EditableFilesList.css';
 
 function EditableFilesList() {
   const [files, setFiles] = useState([]);
   const [activeFileId, setActiveFileId] = useState(null);
   const [language, setLanguage] = useState('english');
+  const [savedFileNames, setSavedFileNames] = useState([]);
+
+  useEffect(() => {
+    const keys = Object.keys(localStorage);
+    setSavedFileNames(keys);
+  }, []);
 
   const handleAddFile = () => {
     const newFile = {
@@ -18,23 +25,66 @@ function EditableFilesList() {
       color: 'black',
       fontSize: '24px',
       fontFamily: 'sans-serif',
+      history: [],
+      fileName: ''
     };
     setFiles(prev => [...prev, newFile]);
+    setActiveFileId(newFile.id);
   };
 
-  const handleDeleteFile = (id) => {
+  const handleTextChange = (id, newText) => {
+    setFiles(prev =>
+      prev.map(file =>
+        file.id === id
+          ? { ...file, history: [...file.history, file.text], text: newText }
+          : file
+      )
+    );
+  };
+
+  const handleLoadFile = (fileData) => {
+    const newFile = {
+      id: Date.now(),
+      text: fileData.text || '',
+      color: fileData.color || 'black',
+      fontSize: fileData.fontSize || '24px',
+      fontFamily: fileData.fontFamily || 'sans-serif',
+      fileName: fileData.fileName || '',
+      history: [],
+    };
+    setFiles(prev => [...prev, newFile]);
+    setActiveFileId(newFile.id);
+  };
+
+  const handleRemoveFile = (id, savedName) => {
     setFiles(prev => prev.filter(file => file.id !== id));
-    if (activeFileId === id) {
-      setActiveFileId(null);
+    if (!savedFileNames.includes(savedName)) {
+      setSavedFileNames(prev => [...prev, savedName]);
+    }
+  };
+
+  const handleSpecialTextChange = (updater) => {
+    if (activeFileId) {
+      setFiles(prev =>
+        prev.map(file =>
+          file.id === activeFileId
+            ? { ...file, history: [...file.history, file.text], text: updater(file.text) }
+            : file
+        )
+      );
     }
   };
 
   const handleKeyClick = (key) => {
     if (activeFileId) {
-      setFiles(prevFiles =>
-        prevFiles.map(file =>
+      setFiles(prev =>
+        prev.map(file =>
           file.id === activeFileId
-            ? { ...file, text: (file.text || '') + key }
+            ? {
+                ...file,
+                history: [...file.history, file.text],
+                text: (file.text || '') + key
+              }
             : file
         )
       );
@@ -43,27 +93,40 @@ function EditableFilesList() {
 
   return (
     <div className="editable-files-list">
-      <Button label="➕ Add New File" onClick={handleAddFile} />
+      <div className="sidebar-and-files">
+        <SaveSideBar
+          savedFileNames={savedFileNames}
+          onLoadFile={handleLoadFile}
+        />
 
-      <div className="files-container">
-        {files.map(file => (
-          <EditableFile
-            key={file.id}
-            id={file.id}
-            text={file.text}
-            color={file.color}
-            fontSize={file.fontSize}
-            fontFamily={file.fontFamily}
-            onDelete={handleDeleteFile}
-            onFocus={() => setActiveFileId(file.id)}
+        <div className="main-area">
+          <Button label="➕ Add File" onClick={handleAddFile} />
+
+          <div className="files-container">
+            {files.map(file => (
+              <EditableFile
+                key={file.id}
+                id={file.id}
+                text={file.text}
+                color={file.color}
+                fontSize={file.fontSize}
+                fontFamily={file.fontFamily}
+                onTextChange={(newText) => handleTextChange(file.id, newText)}
+                onLoadFile={handleLoadFile}
+                onFocus={() => setActiveFileId(file.id)}
+                isActive={file.id === activeFileId}
+                onAfterSave={(savedName) => handleRemoveFile(file.id, savedName)}
+              />
+            ))}
+          </div>
+
+          <Keyboard
+            language={language}
+            onKeyClick={handleKeyClick}
+            onTextChange={handleSpecialTextChange}
           />
-        ))}
+        </div>
       </div>
-
-      <Keyboard
-        language={language}
-        onKeyClick={handleKeyClick}
-      />
     </div>
   );
 }

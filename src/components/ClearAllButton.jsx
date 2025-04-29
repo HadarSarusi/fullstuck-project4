@@ -5,10 +5,11 @@ import Button from './Button';
 
 function ClearAllButton({ onTextChange }) {
   const handleClearAll = () => {
-    onTextChange('');
+    onTextChange(() => '');
   };
 
   return <Button label="Clear All" onClick={handleClearAll} />;
 }
 
 export default ClearAllButton;
+

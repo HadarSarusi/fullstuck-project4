@@ -1,56 +1,125 @@
 // src/components/EditableFile.jsx
 
-import React from 'react';
+import React, { useState } from 'react';
 import TextEditor from './TextEditor';
 import TextDisplay from './TextDisplay';
 import SaveLoadBar from './SaveLoadBar';
-import Button from './Button';
+import FindBar from './FindBar';
+import ReplaceBar from './ReplaceBar';
+import TextStyleBar from './TextStyleBar';
+import UndoButton from './UndoButton';
 import '../styles/EditableFile.css';
 
-function EditableFile({ id, text, color, fontSize, fontFamily, onDelete, onFocus }) {
+function EditableFile({
+  id,
+  text,
+  color,
+  fontSize,
+  fontFamily,
+  onTextChange,
+  onLoadFile,
+  onFocus,
+  isActive,
+  onAfterSave
+}) {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currentColor, setCurrentColor] = useState(color);
+  const [currentFontSize, setCurrentFontSize] = useState(fontSize);
+  const [currentFontFamily, setCurrentFontFamily] = useState(fontFamily);
+  const [history, setHistory] = useState([]);
+  const [fileName, setFileName] = useState(''); // ✅ נשמר כאן שם הקובץ
 
-  const handleSave = (fileName) => {
-    if (!fileName) {
-      window.alert('Please enter a file name!');
-      return;
-    }
-    const fileData = {
-      text,
-      color,
-      fontSize,
-      fontFamily
-    };
-    localStorage.setItem(fileName, JSON.stringify(fileData));
-    window.alert(`Saved "${fileName}" successfully! 🎉`);
+  const saveToHistory = () => {
+    setHistory((prev) => [
+      ...prev,
+      {
+        text,
+        color: currentColor,
+        fontSize: currentFontSize,
+        fontFamily: currentFontFamily,
+      },
+    ]);
   };
 
   return (
-    <div className="editable-file" onClick={onFocus}>
-      <div className="file-header">
-        <Button label="❌ Close" onClick={() => onDelete(id)} />
-      </div>
-
-      {/* אזור שמירה */}
+    <div
+      className={`editable-file ${isActive ? 'active' : ''}`}
+      onClick={onFocus}
+    >
+      {/* שמירה וטעינה */}
       <SaveLoadBar
-        text={text}
-        color={color}
-        fontSize={fontSize}
-        fontFamily={fontFamily}
-        onSaveFile={handleSave}
+  text={text}
+  color={currentColor}
+  fontSize={currentFontSize}
+  fontFamily={currentFontFamily}
+  fileName={fileName} // מעביר את שם הקובץ הקיים
+  setFileName={setFileName}
+  onLoadFile={(fileData) => {
+    onLoadFile(fileData);
+    if (fileData.fileName) setFileName(fileData.fileName); // שומר את שם הקובץ
+  }}
+  onAfterSave={onAfterSave}
+/>
+
+      {/* סטיילים */}
+      <TextStyleBar
+        onColorChange={(color) => {
+          saveToHistory();
+          setCurrentColor(color);
+        }}
+        onFontSizeChange={(size) => {
+          saveToHistory();
+          setCurrentFontSize(size);
+        }}
+        onFontFamilyChange={(family) => {
+          saveToHistory();
+          setCurrentFontFamily(family);
+        }}
       />
 
-      {/* אזור כתיבה */}
-      <TextEditor
+      {/* Undo */}
+      <UndoButton
         text={text}
-        onTextChange={() => {}} // כבר לא צריך שינוי טקסט כאן כי המקלדת כותבת
+        setText={onTextChange}
+        color={currentColor}
+        setColor={setCurrentColor}
+        fontSize={currentFontSize}
+        setFontSize={setCurrentFontSize}
+        fontFamily={currentFontFamily}
+        setFontFamily={setCurrentFontFamily}
+        history={history}
+        setHistory={setHistory}
       />
 
-      {/* אזור תצוגה */}
+      {/* חיפוש */}
+      <FindBar text={text} setSearchTerm={setSearchTerm} />
+
+      {/* החלפה */}
+      <ReplaceBar
+        text={text}
+        setText={(newText) => {
+          saveToHistory();
+          onTextChange(newText);
+        }}
+        setSearchTerm={setSearchTerm}
+      />
+
+      {/* תצוגה */}
       <TextDisplay
         text={text}
-        color={color}
-        fontSize={fontSize}
-        fontFamily={fontFamily}
+        color={currentColor}
+        fontSize={currentFontSize}
+        fontFamily={currentFontFamily}
+        searchTerm={searchTerm}
+      />
+
+      {/* עורך */}
+      <TextEditor
+        text={text}
+        onTextChange={(newText) => {
+          saveToHistory();
+          onTextChange(newText);
+        }}
       />
     </div>
   );

@@ -3,35 +3,46 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/SaveSideBar.css';
 
-function SaveSideBar({ onLoadFile }) {
+function SaveSideBar({ onLoadFile, username }) {
   const [savedFiles, setSavedFiles] = useState([]);
 
   useEffect(() => {
-    loadSavedFiles();
-  }, []);
+    const updateList = () => {
+      const keys = Object.keys(localStorage);
+      const userFiles = keys.filter((key) => key.startsWith(`${username}_`));
+      const fileNamesOnly = userFiles.map((key) => key.replace(`${username}_`, ''));
+      setSavedFiles(fileNamesOnly);
+    };
 
-  const loadSavedFiles = () => {
-    const keys = Object.keys(localStorage);
-    setSavedFiles(keys);
-  };
+    updateList();
+    window.addEventListener('storage', updateList);
+    const interval = setInterval(updateList, 1000);
 
-  const handleFileClick = (fileName) => {
-    const fileContent = localStorage.getItem(fileName);
-    if (fileContent !== null) {
-      const parsedContent = JSON.parse(fileContent);
-      onLoadFile(parsedContent);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('storage', updateList);
+    };
+  }, [username]);
+
+  const handleLoad = (fileName) => {
+    const fullKey = `${username}_${fileName}`;
+    const fileData = localStorage.getItem(fullKey);
+    if (fileData) {
+      const parsed = JSON.parse(fileData);
+      parsed.fileName = fileName;
+      onLoadFile(parsed);
     } else {
-      alert('קובץ לא נמצא.');
+      alert(`No data found for file "${fileName}"`);
     }
   };
 
   return (
     <div className="save-sidebar">
-      <h3>📁 הקבצים השמורים</h3>
+      <h3>📁 Saved Files</h3>
       <ul>
-        {savedFiles.map((file, index) => (
-          <li key={index} onClick={() => handleFileClick(file)}>
-            {file}
+        {savedFiles.map((fileName, index) => (
+          <li key={index} onClick={() => handleLoad(fileName)}>
+            {fileName}
           </li>
         ))}
       </ul>
