@@ -1,11 +1,14 @@
+
 .editable-file {
-  border: 2px dashed #ccc;
+  border: 2px solid #90caf9;
   padding: 20px;
   margin-bottom: 20px;
-  border-radius: 10px;
-  background-color: #f9f9f9;
-  transition: background-color 0.3s;
+  border-radius: 12px;
+  background-color: #e3f2fd;
+  transition: background-color 0.3s, border 0.3s;
 }
+
 .editable-file.active {
-  background-color: #e0f7fa; /* צבע לקובץ פעיל */
+  background-color: #bbdefb;
+  border-color: #42a5f5;
 }

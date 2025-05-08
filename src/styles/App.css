@@ -1,8 +1,113 @@
-.app-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    padding: 1rem;
-    font-family: sans-serif;
+body, html, #root {
+  height: 100%;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 22px; /* טקסט כללי גדול יותר */
+  background-color: #e3f2fd;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow-y: auto;
+}
+
+/* סרגל עליון */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 32px;
+  background-color: #2196f3;
+  color: white;
+  font-size: 24px;
+}
+
+.top-bar button {
+  background-color: #bbdefb;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.top-bar button:hover {
+  background-color: #90caf9;
+}
+
+.editor-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #e3f2fd;
+  padding: 24px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+
+/* מקלדת */
+.keyboard-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 32px;
+  background-color: #e0f7fa;
+  border-radius: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 20px;
+}
+
+.keyboard-button {
+  font-size: 26px;
+  padding: 20px 28px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  flex: 1 0 80px; /* כל כפתור לפחות 80px */
+  max-width: 120px;
+  text-align: center;
+  transition: 0.2s;
+}
+
+.keyboard-button:hover {
+  background-color: #1976d2;
+}
+
+/* שדות קלט */
+input[type="text"], input[type="password"] {
+  font-size: 20px;
+  padding: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+}
+
+/* רספונסיביות למסכים קטנים */
+@media screen and (max-width: 768px) {
+  body {
+    font-size: 18px;
   }
-  
+
+  .keyboard-button {
+    font-size: 20px;
+    padding: 14px 18px;
+    flex: 1 0 60px;
+  }
+
+  .top-bar {
+    font-size: 20px;
+    padding: 16px;
+  }
+}

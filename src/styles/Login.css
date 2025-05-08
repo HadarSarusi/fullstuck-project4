@@ -1,32 +1,86 @@
-.login-screen {
-    max-width: 300px;
-    margin: 50px auto;
+/* עוטף את כל עמוד הלוגין */
+.login-wrapper {
+    display: flex;
+    justify-content: center;   /* מרכז אופקית */
+    align-items: center;       /* מרכז אנכית */
+    height: 100vh;             /* גובה מלא */
+    width: 100vw;
+    background-color: #e3f2fd;
+    box-sizing: border-box;
     padding: 20px;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    text-align: center;
   }
   
-  .login-screen input {
+  /* תיבת הלוגין עצמה */
+  .login-container {
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
+    border-radius: 16px;
+    background: linear-gradient(to bottom right, #bbdefb, #e3f2fd);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    box-sizing: border-box;
+  }
+  
+  /* כותרת */
+  .login-container h2 {
+    margin-bottom: 24px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #0d47a1;
+  }
+  
+  /* שדות קלט */
+  .login-container input {
     display: block;
     width: 100%;
-    margin: 10px 0;
-    padding: 8px;
-    font-size: 16px;
+    margin: 14px 0;
+    padding: 16px;
+    font-size: 18px;
+    border-radius: 6px;
+    border: 1px solid #90caf9;
+    box-sizing: border-box;
   }
   
-  .login-screen button {
-    padding: 8px 16px;
-    font-size: 16px;
-    background-color: #4caf50;
+  /* כפתור Login */
+  .login-container button {
+    width: 100%;
+    padding: 16px;
+    font-size: 20px;
+    background-color: #1976d2;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
+    margin-top: 16px;
+    transition: background-color 0.3s ease;
   }
   
-  .login-screen button:hover {
-    background-color: #45a049;
+  .login-container button:hover {
+    background-color: #1565c0;
+  }
+  
+  /* הודעת שגיאה */
+  .error-msg {
+    color: red;
+    margin-top: 12px;
+    font-size: 16px;
+  }
+  
+  /* התאמה לרוחב מסך קטן */
+  @media screen and (max-width: 600px) {
+    .login-container {
+      padding: 30px 20px;
+    }
+  
+    .login-container h2 {
+      font-size: 26px;
+    }
+  
+    .login-container input,
+    .login-container button {
+      font-size: 16px;
+      padding: 14px;
+    }
   }
   

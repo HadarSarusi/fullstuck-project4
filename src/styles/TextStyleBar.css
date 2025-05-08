@@ -1,3 +1,4 @@
+
 .text-style-bar {
   margin: 20px;
   text-align: center;
@@ -5,14 +6,19 @@
 
 .bar-content {
   margin-top: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #90caf9;
   padding: 15px;
   border-radius: 10px;
-  background-color: #f9f9f9;
+  background-color: #e3f2fd;
 }
 
 .section {
   margin-bottom: 15px;
+}
+
+.section h4 {
+  color: #1565c0;
+  margin-bottom: 8px;
 }
 
 .options {
@@ -25,7 +31,13 @@
 .color-button {
   width: 30px;
   height: 30px;
-  border: none;
+  border: 2px solid white;
   border-radius: 50%;
   cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.color-button:hover {
+  transform: scale(1.1);
+  border-color: #42a5f5;
 }

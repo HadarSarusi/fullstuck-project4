@@ -1,20 +1,25 @@
+
 .keyboard {
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
-}
-
-.language-switcher {
-  margin-bottom: 20px;
-  display: flex;
-  gap: 10px;
+  margin-top: 24px;
+  background-color: #e3f2fd;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .keyboard-section {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
 }
+
+.keyboard {
+  min-height: 260px; /* קובע גובה יציב */
+  transition: all 0.3s ease-in-out;
+}
+

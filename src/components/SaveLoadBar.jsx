@@ -4,23 +4,18 @@ import React, { useState } from 'react';
 import Button from './Button';
 import '../styles/SaveLoadBar.css';
 
-function SaveLoadBar({
-  text, color, fontSize, fontFamily,
-  fileName, setFileName, onAfterSave,
-  username // 👈 קיבלנו את שם המשתמש
-}) {
+function SaveLoadBar({ text, color, fontSize, fontFamily, fileName, setFileName, onAfterSave, username }) {
   const [inputName, setInputName] = useState('');
 
   const handleSave = () => {
     const nameToSave = fileName || inputName;
 
     if (!nameToSave || !username) {
-      window.alert('Please enter a file name and make sure you are logged in.');
+      window.alert('יש להזין שם קובץ ומשתמש');
       return;
     }
 
     const fullKey = `${username}_${nameToSave}`;
-
     const data = {
       text,
       color,
@@ -37,7 +32,7 @@ function SaveLoadBar({
     }
 
     if (onAfterSave) onAfterSave(nameToSave);
-    window.alert(`Saved as "${nameToSave}" for user ${username}`);
+    window.alert(`💾 הקובץ "${nameToSave}" נשמר עבור ${username}`);
   };
 
   return (

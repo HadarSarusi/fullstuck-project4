@@ -17,10 +17,13 @@ function ReplaceBar({ text, setText, setSearchTerm }) {
     }
     setMessage('');
     const updatedText = text.split(findText).join(replaceText);
+    console.log("Replaced text:", updatedText);
+
     setText(updatedText);
     setFindText('');
     setReplaceText('');
     setSearchTerm('');
+
   };
 
   return (

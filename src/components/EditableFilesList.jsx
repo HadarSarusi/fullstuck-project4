@@ -1,22 +1,17 @@
 // src/components/EditableFilesList.jsx
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import EditableFile from './EditableFile';
 import Keyboard from './Keyboard';
 import Button from './Button';
 import SaveSideBar from './SaveSideBar';
 import '../styles/EditableFilesList.css';
 
-function EditableFilesList() {
+function EditableFilesList({ username }) {
   const [files, setFiles] = useState([]);
   const [activeFileId, setActiveFileId] = useState(null);
-  const [language, setLanguage] = useState('english');
-  const [savedFileNames, setSavedFileNames] = useState([]);
+  //const [language, setLanguage] = useState('english');
 
-  useEffect(() => {
-    const keys = Object.keys(localStorage);
-    setSavedFileNames(keys);
-  }, []);
 
   const handleAddFile = () => {
     const newFile = {
@@ -56,11 +51,8 @@ function EditableFilesList() {
     setActiveFileId(newFile.id);
   };
 
-  const handleRemoveFile = (id, savedName) => {
+  const handleRemoveFile = (id) => {
     setFiles(prev => prev.filter(file => file.id !== id));
-    if (!savedFileNames.includes(savedName)) {
-      setSavedFileNames(prev => [...prev, savedName]);
-    }
   };
 
   const handleSpecialTextChange = (updater) => {
@@ -95,7 +87,7 @@ function EditableFilesList() {
     <div className="editable-files-list">
       <div className="sidebar-and-files">
         <SaveSideBar
-          savedFileNames={savedFileNames}
+          username={username} 
           onLoadFile={handleLoadFile}
         />
 
@@ -115,13 +107,13 @@ function EditableFilesList() {
                 onLoadFile={handleLoadFile}
                 onFocus={() => setActiveFileId(file.id)}
                 isActive={file.id === activeFileId}
-                onAfterSave={(savedName) => handleRemoveFile(file.id, savedName)}
+                onAfterSave={() => handleRemoveFile(file.id)}
+                username={username} 
               />
             ))}
           </div>
 
           <Keyboard
-            language={language}
             onKeyClick={handleKeyClick}
             onTextChange={handleSpecialTextChange}
           />

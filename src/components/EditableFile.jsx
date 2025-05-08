@@ -20,14 +20,15 @@ function EditableFile({
   onLoadFile,
   onFocus,
   isActive,
-  onAfterSave
+  onAfterSave,
+  username
 }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentColor, setCurrentColor] = useState(color);
   const [currentFontSize, setCurrentFontSize] = useState(fontSize);
   const [currentFontFamily, setCurrentFontFamily] = useState(fontFamily);
   const [history, setHistory] = useState([]);
-  const [fileName, setFileName] = useState(''); // ✅ נשמר כאן שם הקובץ
+  const [fileName, setFileName] = useState(''); 
 
   const saveToHistory = () => {
     setHistory((prev) => [
@@ -46,22 +47,21 @@ function EditableFile({
       className={`editable-file ${isActive ? 'active' : ''}`}
       onClick={onFocus}
     >
-      {/* שמירה וטעינה */}
       <SaveLoadBar
   text={text}
   color={currentColor}
   fontSize={currentFontSize}
   fontFamily={currentFontFamily}
-  fileName={fileName} // מעביר את שם הקובץ הקיים
+  fileName={fileName} 
   setFileName={setFileName}
+  username={username}
   onLoadFile={(fileData) => {
     onLoadFile(fileData);
-    if (fileData.fileName) setFileName(fileData.fileName); // שומר את שם הקובץ
+    if (fileData.fileName) setFileName(fileData.fileName);
   }}
   onAfterSave={onAfterSave}
 />
 
-      {/* סטיילים */}
       <TextStyleBar
         onColorChange={(color) => {
           saveToHistory();
@@ -77,7 +77,6 @@ function EditableFile({
         }}
       />
 
-      {/* Undo */}
       <UndoButton
         text={text}
         setText={onTextChange}
@@ -91,10 +90,8 @@ function EditableFile({
         setHistory={setHistory}
       />
 
-      {/* חיפוש */}
       <FindBar text={text} setSearchTerm={setSearchTerm} />
 
-      {/* החלפה */}
       <ReplaceBar
         text={text}
         setText={(newText) => {
@@ -104,7 +101,7 @@ function EditableFile({
         setSearchTerm={setSearchTerm}
       />
 
-      {/* תצוגה */}
+  
       <TextDisplay
         text={text}
         color={currentColor}
@@ -113,7 +110,7 @@ function EditableFile({
         searchTerm={searchTerm}
       />
 
-      {/* עורך */}
+    
       <TextEditor
         text={text}
         onTextChange={(newText) => {
