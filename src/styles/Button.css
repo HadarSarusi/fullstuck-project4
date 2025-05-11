@@ -1,18 +1,25 @@
-
 .custom-button {
-  padding: 10px 20px;
-  margin: 5px;
-  font-size: 16px;
-  font-weight: 500;
-  border: none;
-  border-radius: 6px;
-  background-color: #2196f3;
-  color: white;
+  background-color: #fdf6ec; /* צבע שנהב־וינטג' */
+  color: #3c3c3c;
+  font-family: 'Georgia', serif;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 12px 18px;
+  margin: 6px;
+  border: 1.5px solid #b4a78c;
+  border-radius: 8px; /* ריבוע עם פינות מעוגלות */
+  box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.1s;
 }
 
 .custom-button:hover {
-  background-color: #1976d2;
-  transform: scale(1.03);
+  background-color: #f3ead7;
+  transform: translateY(-2px);
+  box-shadow: 3px 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.custom-button:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
 }

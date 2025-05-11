@@ -41,31 +41,52 @@ function Keyboard({ onKeyClick, onTextChange }) {
     return tag === 'INPUT' || tag === 'TEXTAREA';
   };
 
+  const keys = getKeys();
+
+  // מחלקים את המקשים ל-3 שורות
+  const row1 = keys.slice(0, 10);
+  const row2 = keys.slice(10, 19);
+  const row3 = keys.slice(19);
+
   return (
     <div className="keyboard">
-      {/* מתגים לשפה */}
-      <div className="keyboard-section">
+      {/* כפתורי שפה */}
+      <div className="keyboard-section language-buttons">
         <Button label="English" onClick={() => setLanguage('english')} />
         <Button label="עברית" onClick={() => setLanguage('hebrew')} />
         <Button label="Emojis" onClick={() => setLanguage('emoji')} />
       </div>
 
-      {/* מקשים רגילים */}
-      <div className="keyboard-section">
-        {getKeys().map((key, index) => (
+      {/* שורות מקשים רגילים */}
+      <div className="keyboard-section row-1">
+        {row1.map((key, index) => (
           <Button
-            key={`${language}-${index}`}
+            key={`row1-${index}`}
             label={key}
-            onClick={() => {
-              if (!isInputFocused()) {
-                onKeyClick(key);
-              }
-            }}
+            onClick={() => !isInputFocused() && onKeyClick(key)}
+          />
+        ))}
+      </div>
+      <div className="keyboard-section row-2">
+        {row2.map((key, index) => (
+          <Button
+            key={`row2-${index}`}
+            label={key}
+            onClick={() => !isInputFocused() && onKeyClick(key)}
+          />
+        ))}
+      </div>
+      <div className="keyboard-section row-3">
+        {row3.map((key, index) => (
+          <Button
+            key={`row3-${index}`}
+            label={key}
+            onClick={() => !isInputFocused() && onKeyClick(key)}
           />
         ))}
       </div>
 
-      {/* מקשים מיוחדים */}
+      {/* שורת הפעולות */}
       <div className="keyboard-section actions">
         <SpaceButton onTextChange={onTextChange} />
         <DeleteButton onTextChange={onTextChange} />

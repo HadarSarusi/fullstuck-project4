@@ -1,25 +1,61 @@
-
 .keyboard {
-  /* display: flex; */
+  display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 32px;
   margin-top: 24px;
-  background-color: #e3f2fd;
-  padding: 16px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  width: fit-content;
+  min-width: 720px;
+  max-width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 14px;
+
+  background-image: url('/wood_pic.jpg'); /* מוודאים שהוא ב־public */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  position: relative; /* חשוב אם נשתמש ::before */
+}
+
+/* אם רוצים שכבת אור לבנה מעל העץ – לא חובה */
+.keyboard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.6); /* אפשר גם 0.5 או 0.7 לפי התחושה */
+  border-radius: 20px;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .keyboard-section {
-  margin-bottom: 16px;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
+  flex-wrap: nowrap;
   gap: 12px;
+  position: relative; /* כדי שהכפתורים יהיו מעל ::before */
+  z-index: 1;
 }
 
-.keyboard {
-  min-height: 260px; /* קובע גובה יציב */
-  transition: all 0.3s ease-in-out;
+.language-buttons {
+  margin-bottom: 8px;
 }
 
+.row-1 {
+  padding-left: 0px;
+}
+
+.row-2 {
+  padding-left: 24px;
+}
+
+.row-3 {
+  padding-left: 48px;
+}
+
+.actions {
+  margin-top: 16px;
+}
