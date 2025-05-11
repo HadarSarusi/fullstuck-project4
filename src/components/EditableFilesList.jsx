@@ -28,6 +28,7 @@ function EditableFilesList({ username }) {
   };
 
   const handleTextChange = (id, newText) => {
+    console.log("Text updated for file:", id, newText);
     setFiles(prev =>
       prev.map(file =>
         file.id === id

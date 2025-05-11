@@ -41,6 +41,7 @@ function EditableFile({
       },
     ]);
   };
+  {console.log("TextDisplay sees text:", text)}
 
   return (
     <div
@@ -101,7 +102,7 @@ function EditableFile({
         setSearchTerm={setSearchTerm}
       />
 
-  
+
       <TextDisplay
         text={text}
         color={currentColor}

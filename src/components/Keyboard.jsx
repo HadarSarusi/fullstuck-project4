@@ -36,6 +36,11 @@ function Keyboard({ onKeyClick, onTextChange }) {
     return [];
   };
 
+  const isInputFocused = () => {
+    const tag = document.activeElement.tagName;
+    return tag === 'INPUT' || tag === 'TEXTAREA';
+  };
+
   return (
     <div className="keyboard">
       {/* מתגים לשפה */}
@@ -48,7 +53,15 @@ function Keyboard({ onKeyClick, onTextChange }) {
       {/* מקשים רגילים */}
       <div className="keyboard-section">
         {getKeys().map((key, index) => (
-          <Button key={`${language}-${index}`} label={key} onClick={() => onKeyClick(key)} />
+          <Button
+            key={`${language}-${index}`}
+            label={key}
+            onClick={() => {
+              if (!isInputFocused()) {
+                onKeyClick(key);
+              }
+            }}
+          />
         ))}
       </div>
 

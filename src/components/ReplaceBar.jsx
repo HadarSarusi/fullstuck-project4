@@ -8,22 +8,28 @@ function ReplaceBar({ text, setText, setSearchTerm }) {
   const [findText, setFindText] = useState('');
   const [replaceText, setReplaceText] = useState('');
   const [message, setMessage] = useState('');
+  const [messageColor, setMessageColor] = useState('red');
 
   const handleReplaceClick = () => {
     if (!findText) return;
+
     if (!text.toLowerCase().includes(findText.toLowerCase())) {
-      setMessage('לא נמצאה התאמה 😔');
+      setMessage(`❌ לא נמצאה התאמה למילה: "${findText}"`);
+      setMessageColor('red');
       return;
     }
-    setMessage('');
-    const updatedText = text.split(findText).join(replaceText);
-    console.log("Replaced text:", updatedText);
 
+    const updatedText = text.split(findText).join(replaceText);
     setText(updatedText);
+    setMessage('✅ החלפה בוצעה בהצלחה!');
+    setMessageColor('green');
+
     setFindText('');
     setReplaceText('');
     setSearchTerm('');
 
+    // ננקה את ההודעה אחרי 2 שניות
+    setTimeout(() => setMessage(''), 2000);
   };
 
   return (
@@ -41,7 +47,10 @@ function ReplaceBar({ text, setText, setSearchTerm }) {
         onChange={(e) => setReplaceText(e.target.value)}
       />
       <Button label="Replace" onClick={handleReplaceClick} />
-      {message && <p style={{ color: 'red' }}>{message}</p>}
+
+      {message && (
+        <p style={{ color: messageColor, marginTop: '8px' }}>{message}</p>
+      )}
     </div>
   );
 }
