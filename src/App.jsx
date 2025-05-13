@@ -22,7 +22,6 @@ function App() {
   return (
     <div className="app">
       <div className="top-bar">
-        <span>👤logged in {user}</span>
         <button onClick={handleLogout}>🔄 logout</button>
       </div>
 

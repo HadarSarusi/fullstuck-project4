@@ -13,7 +13,7 @@ function SaveSideBar({ onLoadFile, username }) {
       }
       return null;
     })
-    .filter(Boolean); // מסנן null
+    .filter(Boolean); 
 
   const handleLoad = (fileName) => {
     const fullKey = `${username}_${fileName}`;

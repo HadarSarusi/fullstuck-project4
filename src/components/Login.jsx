@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import '../styles/Login.css';
 
 function Login({ onLogin }) {
-  // נוודא ש־localStorage כולל את שני המשתמשים כבר באתחול
   const initializeUsers = () => {
     const defaultUsers = [
       { username: 'guest', password: '1234' },
@@ -26,7 +25,7 @@ function Login({ onLogin }) {
     }
   };
 
-  const [users] = useState(initializeUsers); // ✅ כל הקסם קורה פה
+  const [users] = useState(initializeUsers); 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
